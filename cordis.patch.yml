@@ -1,0 +1,16 @@
+# dsh-plugin-session-export — capa bundle de DSH.
+# Inserta una fila @deepseek-ai/dsh-mcp-client que lanza el servidor como "export".
+# Tools resultantes: mcp__export__* (ver README).
+- insert:
+    - id: mcp-session-export
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: export
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js "(process.env.DSH_HOME && process.env.DSH_HOME.trim() !== '' ? process.env.DSH_HOME : (process.env.USERPROFILE || process.env.HOME || '') + '/.dsh') + '/plugins/session-export/server.mjs'"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+        failOnStartupError: false
+        toolCallTimeoutMs: 60000
